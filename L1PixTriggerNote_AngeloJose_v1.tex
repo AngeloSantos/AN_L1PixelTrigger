@@ -40,6 +40,10 @@
 %\renewcommand{\chaptermark}[1]{\markboth{\chaptername\ \thechapter.\ #1}{}}
 %% E menos espaço ao começar o capítulo
 \usepackage{titlesec}
+
+%%%%%% Pacote para rotacao de tabelas, textos e figuras
+\usepackage{rotating}
+
 \titleformat{\chapter}[display]
   {\normalfont\rmfamily\huge\mdseries}
   {\chaptertitlename\ \thechapter}{20pt}{\huge}
@@ -237,13 +241,7 @@
 %\vskip 2 cm
 
 %\begin{abstract}
-%Este projeto apresenta um amplo programa de busca por Física Além do Modelo Padrão com base em modelos que prevêem a existência de partículas
-%massivas que decaem através de três diferente canais: dois bóson vetoriais (VV, V$\equiv$W, Z), um bóson vetorial e outro escalar (VH)
-%e dois bósons escalares (HH). Serão analisados os dados coletados pelo experimento \alien{Compact Muon Solenoid} (CMS)
-%a partir de colisões próton-próton fornecidas pelo acelerador \alien{Large Hadron Collider} (LHC). O objetivo principal deste projeto é a
-%análise do conjunto completo de dados coletados pela Colaboração CMS antes do início das atualizações do LHC em 2013. Este projeto é possível
-%devido à participação como membro do grupo \sprace{}, que tem trabalhado ativamente junto ao grupo \exodiboson{} do CMS
-%desenvolvendo técnicas avançadas de análise na busca por novos fenômenos.
+%Este projeto apresenta ...
 %\end{abstract}
 
 %\vskip 2 cm
@@ -253,13 +251,7 @@
 %\begin{center}
 %{\bf Abstract}
 %\end{center}
-%This project presents an extensive program of search for Physics Beyond the Standard Model based on models which foresee the existence of
-%massive particles decaying through three different channels: two vectorial bosons (VV, V$\equiv$W, Z), a vectorial boson and a scalar one (VH)
-%and two scalar bosons (HH). We will analyze data taken by the \alien{Compact
-%Muon Solenoid} (CMS) experiment from proton-proton collisions provided by the \alien{Large Hadron Collider} (LHC) accelerator. Our main goal
-%consists of analyzing the complete set of data collected by the CMS Collaboration before the LHC upgrade startup in 2013. The feasibility of
-%this project is in the participation as a member of the \sprace{} group, which has actively worked with the \exodiboson{} group of CMS
-%developing advanced analysis techniques in the search for new phenomena.
+%This project presents ....
 %\end{abstract}
 %\end{english}
 
@@ -321,20 +313,32 @@ The collections retrieved by the analyzer are:
 
                    \subsubsection{Simulation Tools}
 
+%                   \begin{itemize}
+%                   \item What samples have been created
+%                   \item and tools used for that.
+%                   \end{itemize}
+                   
+                   Before starting the production of the TTree structure, based on the \textit{L1PixelTrigger} analyzer as described
+                   above, there are two mandatory steps.
                    \begin{itemize}
-                   \item What samples have been created
-                   \item and tools used for that.
+                     \item A sample of electron-gun is produced in a first step. Here, one electron per event is produced in generator
+                       level together with the {\it GenParticles} collection, and the deposities of energy in the detector components
+                       are simulated by Geant4.
+                     \item Using the electron-gun samples as input, the second step takes place, where the deposities of energy are
+                       transleted into detector signal, and digital signals are converted into a {\texttt{RAW}} format. This is the
+                       same format provide by the online system.
                    \end{itemize}
-                   
-                   
 
+                   A offical electron-gun sample, with $E_{T}$ between 2 and 50 GeV, is used as input to the second step. Here the
+                   pile up is added to the electron-gun sample. In order to simulate a scenario of 140 pile up, a total of 140
+                   minimum bias are summed to. Table~\ref{tab:gen-sim-minbias} lists the official electron and minimum bias samples.
 
                    \begin{table}[!htb]
-                     \centering
-\scriptsize
-                     \caption{Official MC samples (\texttt{GEN-SIM} for electron-gun and Minimum Bias) used to create \texttt{DIGI-RAW}
-                       and \texttt{Ntuples} files.}
-                     \label{}
+                   \centering
+                   \scriptsize
+                     \caption{Official MC samples (\texttt{GEN-SIM} for electron-gun and Minimum Bias) used to create
+                       \texttt{DIGI-RAW} and \texttt{Ntuple} files.}
+                     \label{tab:gen-sim-minbias}
                      \begin{tabular}{lcl}
 \hline
 {\bf Description} & {\bf Number of Events} & {\bf Official Samples} \\ \hline \hline
@@ -343,24 +347,46 @@ Minimum Bias      & 30M                    & /MinBias\_TuneZ2star\_14TeV-pythia6
                      \end{tabular}
                    \end{table}
 
+                   Output files of the second step have a \texttt{DIGI-RAW} format. Such samples are produced using configuration
+                   files created with a \texttt{CMSSW} tool called {\it cmsDriver}. Table~\ref{tab:digi-raw} provides a list of
+                   {\it datasetpath} for \texttt{CRAB} corresponding to the \texttt{DIGI-RAW} files in four different pile up
+                   scenarios: 0, 35, 70 and 140 pile up. Since outputs are big files --- a total size range from 12 to 400 GB ---
+                   they are produced via \texttt{CRAB}. These files are located at T2\_SPRACE site and each sample of pile up
+                   contains 50 K events.
+
                    \begin{table}[!htb]
                      \centering
-                     \caption{\texttt{DIGI-RAW} and \texttt{Ntuple} MC samples created from official electron-gun and Minimum Bias MC
-                       samples.}
-                     \label{}
-                     \begin{tabular}{lrcc}
+                     \scriptsize
+                     \caption{\texttt{DIGI-RAW} MC samples created from official electron-gun and Minimum Bias MC samples.
+                       \texttt{CRAB} {\it datasetpaths} are provided for 0, 35, 70 and 140 pile up from top to bottom lines.
+                       Each sample has 50K events.}
+                     \label{tab:digi-raw}
+                     \begin{tabular}{c}
 \hline
-{\bf Format}              & {\bf Scenario} & {\bf File Size (GB)} & {\bf Number of events (K)} \\ \hline \hline
-\multirow{4}{*}{DIGI-RAW} & 0 pile up      & 12                   & 50                         \\
-                          & 35 pile up     & 110                  & 50                         \\
-                          & 70 pile up     & 210                  & 50                         \\
-                          & 140 pile up    & 400                  & 50                         \\ \hline
-\multirow{4}{*}{Ntuples}  & 0 pile up      & 0.024                & 50                         \\
-                          & 35 pile up     & 5.6                  & 50                         \\
-                          & 70 pile up     & 11                   & 50                         \\
-                          & 140 pile up    & 22                   & 50                         \\ \hline
+%{\bf Format}                                        & {\bf Pile up}  & {\bf Size (GB)}      & {\bf Data Set Paths} \\ \hline \hline
+%\multirow{4}{*}{\begin{turn}{90}DIGI-RAW\end{turn}} & 0              & 12                   & /SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_noPileUP\_50K\_DIGI\_RAW\_v6-a49c986a608faae0f4ff11329e2bb83f/USER                         \\
+%                                                    & 35             & 110                  & /SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_PU35\_50K\_DIGI\_RAW\_v6-61196276663e836a1b830c8b84a619d4/USER                         \\
+%                                                    & 70             & 210                  & /SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_PU70\_50K\_DIGI\_RAW\_v6-3752475e524a60330e4a83a2952b3625/USER                         \\
+%                                                    & 140            & 400                  & /SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_PU140\_50K\_DIGI\_RAW\_v6-f74d2f3945f4866a2ea25695b38d79f0/USER                         \\ \hline
+%\multirow{4}{*}{\begin{turn}{90}Ntuples\end{turn}}  & 0              & 0.024                & /pnfs/sprace.org.br/data/cms/store/user/adesouza/SingleElectronFlatPt0p2To50/MergedNtuples/SingleElectron\_Pt2to50\_noPU\_ntuple.root                         \\
+%                                                    & 35             & 5.6                  & /pnfs/sprace.org.br/data/cms/store/user/adesouza/SingleElectronFlatPt0p2To50/MergedNtuples/SingleElectron\_Pt2to50\_PU35\_ntuple\_50K.root                         \\
+%                                                    & 70             & 11                   & /pnfs/sprace.org.br/data/cms/store/user/adesouza/SingleElectronFlatPt0p2To50/MergedNtuples/SingleElectron\_Pt2to50\_PU70\_ntuple\_50K.root                         \\
+%                                                    & 140            & 22                   & /pnfs/sprace.org.br/data/cms/store/user/adesouza/SingleElectronFlatPt0p2To50/MergedNtuples/SingleElectron\_Pt2to50\_PU140\_ntuple\_50K.root                         \\ \hline
+{\bf Data Set Paths} \\ \hline \hline
+/SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_noPileUP\_50K\_DIGI\_RAW\_v6-a49c986a608faae0f4ff11329e2bb83f/USER                         \\
+/SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_PU35\_50K\_DIGI\_RAW\_v6-61196276663e836a1b830c8b84a619d4/USER                         \\
+/SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_PU70\_50K\_DIGI\_RAW\_v6-3752475e524a60330e4a83a2952b3625/USER                         \\
+/SingleElectronFlatPt0p2To50/adesouza-SingleElectron\_PU140\_50K\_DIGI\_RAW\_v6-f74d2f3945f4866a2ea25695b38d79f0/USER                         \\ \hline
                      \end{tabular}
                    \end{table}
+
+                   Production of the TTree structure goes in a third step with the full event reconstruction, where the
+                   \texttt{DIGI-RAW} samples are taken as input into configuration files also created via {\it cmsDriver}.
+                   Four different samples, corresponding to each pile up scenario, are produced via \texttt{CRAB}. They are
+                   located in T2\_SPRACE with sizes varying from 24 MB to 22 GB. This is the file path to them:
+
+                   {\footnotesize /pnfs/sprace.org.br/data/cms/store/user/adesouza/SingleElectronFlatPt0p2To50/MergedNtuples/}.
+
                    
                    \begin{figure}[!htb]
                      \centering
@@ -437,6 +463,6 @@ Minimum Bias      & 30M                    & /MinBias\_TuneZ2star\_14TeV-pythia6
         \end{figure}
 
 
-\bibliography{Bibliography}{}
-\bibliographystyle{lucas_unsrt}
+%\bibliography{Bibliography}{}
+%\bibliographystyle{lucas_unsrt}
 \end{document}
