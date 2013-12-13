@@ -263,70 +263,22 @@
 
 \section{Performance Studies Based on Phase 1 Pixel Detector}
 
-        \subsection{The L1PixelTrigger Analyzer}
-        An EDAnalyzer is a module in the \texttt{CMSSW} framework that allows to extract information from datasets containing simulated or collision data. The extracted information is usually saved in files browsable by ROOT, and organized in a TTree structure. In our particular case, the TTree was called \textit{NtupleMaker} and it contais several branches documented below.
+The pixel detector will be upgraded with a geometry of four barrel layers, three forward disks, and three backward disks. Our simulations consider the upgraded pixel detector and scenarios with high number of collisions per bunch crossing (“pile-up”). The study shows the occupancy of the pixel detector as function of the pile-up. It allows us to estimate data rates and lead us to think of strategies for rejecting pile-up from interested events.
 
-Previous analyzers were useful guidelines to build the \textit{L1PixelTrigger}, between them are the \textit{PixelTree} provided by the Tracker Detector Performance Group (DPG), and the \textit{TrackTriggerStudy} provided by the Track Trigger Integration (TTI) group. 
-
-                   \subsubsection{Code and Documentation}
-
-      %             \begin{itemize}
-       %            \item Information about what is the code
-       %            \item how it has been created,
-        %           \item its location
-         %          \item and contents.
-         %          \end{itemize}
-
-                   The \textit{L1PixelTrigger} analyzer was developed in \texttt{CMSSW\_6\_1\_2\_SLHC6\_patch1}, with the routine {\it mkedanlzr L1PixelTrigger}. The source code, named {\it L1PixelTrigger.cc}, is available at 
-{\it https://github.com/jruizvar/pixel-analysis/}. 
-
-The collections retrieved by the analyzer are:
-
-                   \begin{itemize}
-                   \item \textbf{\textit{PileupSummaryInfo}}: Provides the number of interaction per bunch crossing. This collection stores sixteen bunch crossings (12 early, one in-time, three late). To retrieve the pileup distribution, we have to loop into the collection and use the method
- \texttt{getPU\_NumInteractions()} for each bunch. The associated branch in the ROOT file is called  {\it pileup}.
-                   \item \textbf{\textit{BeamSpot}}: Provides the position and error of the beam spot.  The associated branches are
-                     {\it beamSpotX0}, {\it beamSpotX0Error}, {\it beamSpotY0}, {\it beamSpotY0Error}, {\it beamSpotZ0}, and
-                     {\it beamSpotZ0Error}. This collection also provides details about the beam. The width and error in the
-                     transverse plane are given by {\it beamWidthX}, {\it beamWidthXError}, {\it beamWidthY}, and
-                     {\it beamWidthYError}. The spread and error along the Z direction is given by {\it beamSigmaZ}, and {\it beamSigmaZError}.
-                   \item \textbf{\textit{GenParticleCollection}}: Provides information of the event at the generator level. The
-                     multiplicity of \textit{GenParticles} corresponds to the size of the collection, and is stored in the branch
-                     {\it genPartN}. Relevant information is stored in the branches {\it genPartEt}, {\it genPartPt},
-                     {\it genPartEta}, {\it genPartPhi}, {\it genPartCharge}, and {\it genPartId}. The \textit{GenParticleCollection}
-                     does not include the underlying particles in samples with pileup. 
-                   \item \textbf{\textit{L1EmParticleCollection}}: Provides information of the event as measured by the electromagnetic
-                     calorimeter. The size of the collection is stored in the branch {\it egN}.
-                     Relevant information is stored in the branches {\it egE, egEt, egEta, egPhi}, and \textit{egCharge}. The method
-                     \texttt{getCalorimeterPosition()} taken from the \textit{TrackTriggerStudy} analyzer, is used to translate from cylindrical to cartesian coordinates. The output
-                     of this method is stored in the branches {\it egGx, egGy, egGz} and corresponds to the global position in the calorimeter.
-                   \item \textbf{\textit{SiPixelRecHitCollection}}: Provides information of the event as measured by the pixel detector.
-                    The multiplicity of reconstructed hits in the barrel is store in the
-                     branch {\it bHitN}. The global position is stored in the branches {\it bHitGx, bHitGy, bHitGz}. Relevant
-                     branches associated with the pixel barrel are {\it bHitLayer, bHitLadder, bHitModule}. 
-                     The cluster size is stored in the branch {\it bClSize} . \newline
-                     \noindent The multiplicity of reconstructed hits in the endcap is store in the branch {\it fHitN}. The global position is stored in the
-                     branches {\it fHitGx, fHitGy, fHitGz}. Relevant branches associated with the pixel endcap are
-                     {\it fHitDisk, fHitBlade, fHitModule}. The cluster size is stored in the branch {\it fClSize}. 
-                   \end{itemize}
-
-
-                   \subsubsection{Simulation Tools}
+            \subsection{Production of Monte Carlo Samples}
 
 %                   \begin{itemize}
 %                   \item What samples have been created
 %                   \item and tools used for that.
 %                   \end{itemize}
-                   
-                   Before starting the production of the TTree structure, based on the \textit{L1PixelTrigger} analyzer as described
-                   above, there are two mandatory steps.
+                   The simulation of Monte Carlo samples require two steps:
                    \begin{itemize}
                      \item A sample of electron-gun is produced in a first step. Here, one electron per event is produced in generator
-                       level together with the {\it GenParticles} collection, and the deposities of energy in the detector components
+                       level together with the {\it GenParticles} collection. The deposities of energy in the detector components
                        are simulated by Geant4.
-                     \item Using the electron-gun samples as input, the second step takes place, where the deposities of energy are
-                       transleted into detector signal, and digital signals are converted into a {\texttt{RAW}} format. This is the
-                       same format provide by the online system.
+                     \item The second step uses the electron-gun samples as input. The deposities of energy are
+                       translated into detector signals (\texttt{DIGIS}). The digital signals are converted into a {\texttt{RAW}} format, which is the
+                       same format provided by the online system.
                    \end{itemize}
 
                    A offical electron-gun sample, with $E_{T}$ between 2 and 50 GeV, is used as input to the second step. Here the
@@ -410,6 +362,55 @@ Minimum Bias      & 30M                    & /MinBias\_TuneZ2star\_14TeV-pythia6
                      \begin{tabular}{ccc}
                      \end{tabular}
                    \end{table}
+
+        \subsection{The L1PixelTrigger Analyzer}
+        An EDAnalyzer is a module in the \texttt{CMSSW} framework that allows to extract information from datasets containing simulated or collision data. The extracted information is usually saved in files browsable by ROOT, and organized in a TTree structure. The TTree may contain as many branches as needed for the specific analysis.
+
+To build the \textit{L1PixelTrigger} we took elements from other analyzers available in the \texttt{CMSSW}, between them are the \textit{PixelTree} provided by the Tracker Detector Performance Group (DPG), and the \textit{TrackTriggerStudy} provided by the Track Trigger Integration (TTI) group. 
+
+                   \subsubsection{Code and Documentation}
+
+      %             \begin{itemize}
+       %            \item Information about what is the code
+       %            \item how it has been created,
+        %           \item its location
+         %          \item and contents.
+         %          \end{itemize}
+
+                   The \textit{L1PixelTrigger} analyzer was developed in \texttt{CMSSW\_6\_1\_2\_SLHC6\_patch1}, with the routine {\it mkedanlzr L1PixelTrigger}. The source code, named {\it L1PixelTrigger.cc}, is available at 
+{\it https://github.com/jruizvar/pixel-analysis/}. 
+
+The collections retrieved by the analyzer are:
+
+                   \begin{itemize}
+                   \item \textbf{\textit{PileupSummaryInfo}}: Provides the number of interaction per bunch crossing. This collection stores sixteen bunch crossings (12 early, one in-time, three late). To retrieve the pileup distribution, we have to loop into the collection and use the method
+ \texttt{getPU\_NumInteractions()} for each bunch. The associated branch in the ROOT file is called  {\it pileup}.
+                   \item \textbf{\textit{BeamSpot}}: Provides the position and error of the beam spot.  The associated branches are
+                     {\it beamSpotX0}, {\it beamSpotX0Error}, {\it beamSpotY0}, {\it beamSpotY0Error}, {\it beamSpotZ0}, and
+                     {\it beamSpotZ0Error}. This collection also provides details about the beam. The width and error in the
+                     transverse plane are given by {\it beamWidthX}, {\it beamWidthXError}, {\it beamWidthY}, and
+                     {\it beamWidthYError}. The spread and error along the Z direction is given by {\it beamSigmaZ}, and {\it beamSigmaZError}.
+                   \item \textbf{\textit{GenParticleCollection}}: Provides information of the event at the generator level. The
+                     multiplicity of \textit{GenParticles} corresponds to the size of the collection, and is stored in the branch
+                     {\it genPartN}. Relevant information is stored in the branches {\it genPartEt}, {\it genPartPt},
+                     {\it genPartEta}, {\it genPartPhi}, {\it genPartCharge}, and {\it genPartId}. The \textit{GenParticleCollection}
+                     does not include the underlying particles in samples with pileup. 
+                   \item \textbf{\textit{L1EmParticleCollection}}: Provides information of the event as measured by the electromagnetic
+                     calorimeter. The size of the collection is stored in the branch {\it egN}.
+                     Relevant information is stored in the branches {\it egE, egEt, egEta, egPhi}, and \textit{egCharge}. The method
+                     \texttt{getCalorimeterPosition()} taken from the \textit{TrackTriggerStudy} analyzer, is used to translate from cylindrical to cartesian coordinates. The output
+                     of this method is stored in the branches {\it egGx, egGy, egGz} and corresponds to the global position in the calorimeter.
+                   \item \textbf{\textit{SiPixelRecHitCollection}}: Provides information of the event as measured by the pixel detector.
+                    The multiplicity of reconstructed hits in the barrel is store in the
+                     branch {\it bHitN}. The global position is stored in the branches {\it bHitGx, bHitGy, bHitGz}. Relevant
+                     branches associated with the pixel barrel are {\it bHitLayer, bHitLadder, bHitModule}. 
+                     The cluster size is stored in the branch {\it bClSize} . \newline
+                     \noindent The multiplicity of reconstructed hits in the endcap is store in the branch {\it fHitN}. The global position is stored in the
+                     branches {\it fHitGx, fHitGy, fHitGz}. Relevant branches associated with the pixel endcap are
+                     {\it fHitDisk, fHitBlade, fHitModule}. The cluster size is stored in the branch {\it fClSize}. 
+                   \end{itemize}
+
+
 
         \subsection{Results on Phase 1 Pixel Detector Performances}
 
