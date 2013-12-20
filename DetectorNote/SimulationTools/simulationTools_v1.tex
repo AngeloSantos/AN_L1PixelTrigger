@@ -115,25 +115,38 @@ located in T2\_SPRACE with sizes varying from 24 MB to 22 GB. This is the file p
 
 {\footnotesize /pnfs/sprace.org.br/data/cms/store/user/adesouza/SingleElectronFlatPt0p2To50/MergedNtuples/}.
 
+In the Phase I upgrade, one extra barrel layer and two extra endcap disks are included in the pixel detector.
+Figure~\ref{fig:RZ_view_pixel_hits} has a $r-z$ view of this upgraded pixel system, where the pixel hits are
+simulated using a sample of single electron-gun. Barrel layers comprise the region of 548.8 mm along $z$ direction,
+and with radii from 3 to 16 cm.
+
 \begin{figure}[!htb]
   \centering
   \includegraphics[scale=0.8]{../SimulationTools/RZ_view_pixel_hits.pdf}
   \caption{RZ view of reconstructed hits in the pixel detector.}
-  \label{}
+  \label{fig:RZ_view_pixel_hits}
 \end{figure}
+
+The average number of proton-proton collisions in a bunch crossing depends on the operation characteristics of
+the LHC. Figure~\ref{fig:PileUP_4scenarios} shows four different pile up scenarios, following a Poisson
+distribution, corresponding to the sample list of single electron-gun produced as described above. In average,
+those scenarios have bunch crossings containing 0, 35, 70 and 140 proton-proton collisions.
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[scale=0.8]{../SimulationTools/PileUP_4scenarios.pdf}
   \caption{Pile up distributions in four different scenarios: zero (top left), 35 (top right), 70 (bottom
     left) and 140 (bottom right) pile up.}
-  \label{}
+  \label{fig:PileUP_4scenarios}
 \end{figure}
+
+The interaction region of proton-proton collisions is also dependent on the characteristics of the LHC operations.
+Table~\ref{tab:beam_spot} presents the beam spot positions and its uncertainties for each pile up scenario.
 
 \begin{table}[!htb]
   \centering
   \caption{Beam spot position and associated uncertainty.}
-  \label{}
+  \label{tab:beam_spot}
   \begin{tabular}{ccc}
   \end{tabular}
 \end{table}
@@ -147,39 +160,45 @@ located in T2\_SPRACE with sizes varying from 24 MB to 22 GB. This is the file p
 %\item and different pixel cluster algorithms.
 %\end{itemize}
 
+The amount of particles traveling through the detector is as higher as the number of proton-proton interactions.
+Figure~\ref{fig:GenParticles_EtEtaPhi} shows $E_{T}$, $\eta$ and $\phi$ distributions of single electron-gun in
+generator level, while Figs.~\ref{fig:L1EM_EtEtaPhi_0PileUP}, \ref{fig:L1EM_EtEtaPhi_35PileUP},
+\ref{fig:L1EM_EtEtaPhi_70PileUP} and \ref{fig:L1EM_EtEtaPhi_140PileUP} shows those distributions in case of
+0, 35, 70 and 140 pile up using the tree structures detailed in the last section.
+
 \begin{figure}[!htb]
   \centering
   \includegraphics[scale=0.8]{../SimulationTools/GenParticles_EtEtaPhi.pdf}
   \caption{$E_{T}$, $\eta$ and $\phi$ distributions of generated particles (using single electron-gun).}
-  \label{}
+  \label{fig:GenParticles_EtEtaPhi}
 \end{figure}
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[scale=0.8]{../SimulationTools/L1EM_EtEtaPhi_0PileUP.pdf}
   \caption{$E_{T}$, $\eta$ and $\phi$ distributions of L1EM particles (using single electron-gun) for 0 pile up.}
-  \label{}
+  \label{fig:L1EM_EtEtaPhi_0PileUP}
 \end{figure}
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[scale=0.8]{../SimulationTools/L1EM_EtEtaPhi_35PileUP.pdf}
   \caption{$E_{T}$, $\eta$ and $\phi$ distributions of L1EM particles (using single electron-gun) for 35 pile up.}
-  \label{}
+  \label{fig:L1EM_EtEtaPhi_35PileUP}
 \end{figure}
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[scale=0.8]{../SimulationTools/L1EM_EtEtaPhi_70PileUP.pdf}
   \caption{$E_{T}$, $\eta$ and $\phi$ distributions of L1EM particles (using single electron-gun) for 70 pile up.}
-  \label{}
+  \label{fig:L1EM_EtEtaPhi_70PileUP}
 \end{figure}
 
 \begin{figure}[!htb]
   \centering
   \includegraphics[scale=0.8]{../SimulationTools/L1EM_EtEtaPhi_140PileUP.pdf}
   \caption{$E_{T}$, $\eta$ and $\phi$ distributions of L1EM particles (using single electron-gun) for 140 pile up.}
-  \label{}
+  \label{fig:L1EM_EtEtaPhi_140PileUP}
 \end{figure}
 
 \begin{figure}[!htb]
@@ -188,5 +207,5 @@ located in T2\_SPRACE with sizes varying from 24 MB to 22 GB. This is the file p
   \caption{Number of pixel clusters per event in the different components of the pixel detector left by a single electron.
     Forward $(z>0)$ and backward $(z<0)$ disks are taken separately.}
   %\caption{Pixel clusters and ocuppancies for different pile up scenarios.}
-  \label{}
+  \label{fig:Number_of_pixel_clusters}
 \end{figure}
