@@ -2,6 +2,7 @@
 
 \subsubsection{Developed tools: summarizing the work we are doing to have the needed simulation tools to perform our studies. (JOSE + ANGELO)}
 
+\vspace{0.5 cm}
 \textbf{The L1PixelTrigger Analyzer}
 
 An EDAnalyzer is a module in the \texttt{CMSSW} framework that allows to extract information from datasets
@@ -13,6 +14,7 @@ Previous analyzers were useful guidelines to build the \textit{L1PixelTrigger}, 
 \textit{PixelTree} provided by the Tracker Detector Performance Group (DPG), and the \textit{TrackTriggerStudy}
 provided by the Track Trigger Integration (TTI) group.
 
+\vspace{0.5 cm}
 \textbf{Code and Documentation}
 
 The \textit{L1PixelTrigger} analyzer was developed in \texttt{CMSSW\_6\_1\_2\_SLHC6\_patch1}, with the routine
@@ -53,6 +55,7 @@ reconstructed hits in the endcap is store in the branch {\it fHitN}. The global 
 fHitModule}. The cluster size is stored in the branch {\it fClSize}.
 \end{itemize}
 
+\vspace{0.5 cm}
 \textbf{Simulation Tools}
 
 Before starting the production of the TTree structure, based on the \textit{L1PixelTrigger} analyzer as described
@@ -66,8 +69,8 @@ above, there are two mandatory steps.
   same format provide by the online system.
 \end{itemize}
 
-A offical electron-gun sample, with $E_{T}$ between 2 and 50 GeV, is used as input to the second step. Here the
-pile up is added to the electron-gun sample. In order to simulate a scenario of 140 pile up, a total of 140
+An offical electron-gun sample, with $E_{T}$ between 2 and 50 GeV, is used as input to the second step. Here the
+pile up is added to the electron-gun sample. In order to simulate a scenario of 140 pile up, for example, a total of 140
 minimum bias are summed to. Table~\ref{tab:gen-sim-minbias} lists the official electron and minimum bias samples.
 
 \begin{table}[!htb]
@@ -122,7 +125,7 @@ and with radii from 3 to 16 cm.
 
 \begin{figure}[!htb]
   \centering
-  \includegraphics[scale=0.8]{../SimulationTools/RZ_view_pixel_hits.pdf}
+  \includegraphics[scale=0.8]{../SimulationTools/RZ_view_pixel_hits_v2.pdf}
   \caption{RZ view of reconstructed hits in the pixel detector.}
   \label{fig:RZ_view_pixel_hits}
 \end{figure}
@@ -164,7 +167,7 @@ The amount of particles traveling through the detector is as higher as the numbe
 Figure~\ref{fig:GenParticles_EtEtaPhi} shows $E_{T}$, $\eta$ and $\phi$ distributions of single electron-gun in
 generator level, while Figs.~\ref{fig:L1EM_EtEtaPhi_0PileUP}, \ref{fig:L1EM_EtEtaPhi_35PileUP},
 \ref{fig:L1EM_EtEtaPhi_70PileUP} and \ref{fig:L1EM_EtEtaPhi_140PileUP} shows those distributions in case of
-0, 35, 70 and 140 pile up using the tree structures detailed in the last section.
+0, 35, 70 and 140 pile up, respectively, using the tree structures detailed in the last section.
 
 \begin{figure}[!htb]
   \centering
@@ -200,6 +203,10 @@ generator level, while Figs.~\ref{fig:L1EM_EtEtaPhi_0PileUP}, \ref{fig:L1EM_EtEt
   \caption{$E_{T}$, $\eta$ and $\phi$ distributions of L1EM particles (using single electron-gun) for 140 pile up.}
   \label{fig:L1EM_EtEtaPhi_140PileUP}
 \end{figure}
+
+Traveling along the detector, an electron may leave signal in the different components it passes through.
+Figure~\ref{fig:Number_of_pixel_clusters} shows a simulation of the number of pixel clusters, per event, in different
+barrel layers and disks of the pixel system due to the passage of electrons.
 
 \begin{figure}[!htb]
   \centering
