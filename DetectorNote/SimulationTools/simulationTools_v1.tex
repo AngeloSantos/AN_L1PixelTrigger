@@ -11,8 +11,8 @@ and organized in a TTree structure. In our particular case, the TTree was called
 contais several branches documented below.
 
 Previous analyzers were useful guidelines to build the \textit{L1PixelTrigger}, between them are the
-\textit{PixelTree} provided by the Tracker Detector Performance Group (DPG), and the \textit{TrackTriggerStudy}
-provided by the Track Trigger Integration (TTI) group.
+\textit{PixelTree} provided by the Tracker Detector Performance Group (DPG~\cite{ref:DPG}), and the \textit{TrackTriggerStudy}
+provided by the Track Trigger Integration (TTI~\cite{ref:TTI}) group.
 
 \vspace{0.5 cm}
 \textbf{Code and Documentation}
@@ -63,7 +63,7 @@ above, there are two mandatory steps.
 \begin{itemize}
 \item A sample of electron-gun is produced in a first step. Here, one electron per event is produced in generator
   level together with the {\it GenParticles} collection, and the deposities of energy in the detector components
-  are simulated by Geant4.
+  are simulated by Geant4~\cite{Agostinelli:2002hh}.
 \item Using the electron-gun samples as input, the second step takes place, where the deposities of energy are
   transleted into detector signal, and digital signals are converted into a {\texttt{RAW}} format. This is the
   same format provide by the online system.
