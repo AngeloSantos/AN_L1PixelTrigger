@@ -7,10 +7,10 @@
 
 An EDAnalyzer is a module in the \texttt{CMSSW} framework that allows to extract information from datasets
 containing simulated or collision data. The extracted information is usually saved in files browsable by ROOT,
-and organized in a TTree structure. In our particular case, the TTree was called \textit{NtupleMaker} and it
-contais several branches documented below.
+and organized in a TTree structure. The TTree may contain as many branches as needed for the analysis, in our particular case the TTree was called \textit{NtupleMaker}
+and its branches are documented in this section.
 
-Previous analyzers were useful guidelines to build the \textit{L1PixelTrigger}, between them are the
+To build the \textit{L1PixelTrigger} we took elements from other analyzers available in the \texttt{CMSSW}, between them are the
 \textit{PixelTree} provided by the Tracker Detector Performance Group (DPG~\cite{ref:DPG}), and the \textit{TrackTriggerStudy}
 provided by the Track Trigger Integration (TTI~\cite{ref:TTI}) group.
 
@@ -143,20 +143,22 @@ those scenarios have bunch crossings containing 0, 35, 70 and 140 proton-proton 
   \label{fig:PileUP_4scenarios}
 \end{figure}
 
-The interaction region of proton-proton collisions is also dependent on the characteristics of the LHC operations.
-Table~\ref{tab:beam_spot} presents the beam spot positions and its uncertainties for each pile up scenario.
+The interaction region of proton-proton collisions depends on the beam conditions defined by the LHC operation. 
+Table~\ref{tab:beam_spot} presents the beam spot position and its uncertainty; it looks like an ellipsoid centered at the origin (0,0,0) and stretched along the $Z$ direction. 
+In real collisions the beam spot may be displaced from the origin, though this effect was not simulated.
 
 \begin{table}[!htb]
   \centering
-  \caption{Beam spot position and associated uncertainty.}
-  \label{tab:beam_spot}
-  \begin{tabular}{ccc}
+  \caption{Simulated beam spot position.}
+  \label{tab:beam_spot}       
+  \begin{tabular}{ccc} \hline
+        beamSpot X & beamSpot Y &  beamSpot Z \\ \hline 
+          0 $\pm$ 139 $\mu$m        & 0 $\pm$ 106 $\mu$m          & 0 $\pm$ 7.3 mm \\ \hline
   \end{tabular}
 \end{table}
 
 
-\subsubsection{Results on Phase 1 Pixel Detector Performances based on CMSSW6 with emphasis on the effect of increasing luminosity
-(JOSE+ANGELO)}
+\subsubsection{Results on Phase 1 Pixel Detector Performances based on CMSSW6 with emphasis on the effect of increasing luminosity}
 
 %\begin{itemize}
 %\item Results based on CMSSW\_6 with emphasis on the effect of increasing luminosity
